@@ -1,36 +1,15 @@
 import { useState } from "react";
 
-function getFrameScores(rolls) {
-  let scores = [];
-  let rollIndex = 0;
-  let total = 0;
-  for (let frame = 0; frame < 10; frame++) {
-    if (rolls[rollIndex] === 10) {
-      total += 10 + (rolls[rollIndex + 1] || 0) + (rolls[rollIndex + 2] || 0);
-      scores.push(total);
-      rollIndex += 1;
-    } else if ((rolls[rollIndex] || 0) + (rolls[rollIndex + 1] || 0) === 10) {
-      total += 10 + (rolls[rollIndex + 2] || 0);
-      scores.push(total);
-      rollIndex += 2;
-    } else {
-      total += (rolls[rollIndex] || 0) + (rolls[rollIndex + 1] || 0);
-      scores.push(total);
-      rollIndex += 2;
-    }
-  }
-  return scores;
-}
-
 function App() {
   const [rolls, setRolls] = useState([]);
   const [frame, setFrame] = useState(1);
-  const [rollInFrame, setRollInFrame] = useState(1); // 1, 2, or 3 for 10th frame
+  const [rollInFrame, setRollInFrame] = useState(1);
   const [firstRollPins, setFirstRollPins] = useState(null);
   const [score, setScore] = useState(null);
+  const [frameScores, setFrameScores] = useState([]);
   const [message, setMessage] = useState("");
 
-  // Call backend to calculate score
+  // Call backend to calculate score and frame scores
   const calculateScore = async (rollsArr) => {
     const res = await fetch("http://localhost:3001/score", {
       method: "POST",
@@ -39,6 +18,7 @@ function App() {
     });
     const data = await res.json();
     setScore(data.score);
+    setFrameScores(data.frameScores || []);
   };
 
   // Prepare frame data for display
@@ -76,10 +56,10 @@ function App() {
         setFirstRollPins(pins);
         setRolls(newRolls);
         setRollInFrame(2);
-        calculateScore(newRolls); 
+        calculateScore(newRolls);
       } else if (rollInFrame === 2) {
         setRolls(newRolls);
-        calculateScore(newRolls); 
+        calculateScore(newRolls);
         if (
           firstRollPins === 10 ||
           firstRollPins + pins === 10
@@ -90,7 +70,7 @@ function App() {
         }
       } else if (rollInFrame === 3) {
         setRolls(newRolls);
-        calculateScore(newRolls); 
+        calculateScore(newRolls);
         setFrame(11);
       }
       return;
@@ -100,9 +80,8 @@ function App() {
     if (rollInFrame === 1) {
       setFirstRollPins(pins);
       setRolls(newRolls);
-      calculateScore(newRolls); 
+      calculateScore(newRolls);
       if (pins === 10) {
-        // Strike, move to next frame
         setFrame(frame + 1);
         setRollInFrame(1);
         setFirstRollPins(null);
@@ -111,7 +90,7 @@ function App() {
       }
     } else if (rollInFrame === 2) {
       setRolls(newRolls);
-      calculateScore(newRolls); 
+      calculateScore(newRolls);
       setFrame(frame + 1);
       setRollInFrame(1);
       setFirstRollPins(null);
@@ -127,23 +106,8 @@ function App() {
     maxPins = 10;
   }
 
-  // Calculate frame scores
-  const frameScores = getFrameScores(rolls);
-
   // Only include frames that are actually complete (score is not undefined)
-  const completedFrames = frameScores.filter((s, idx) => {
-    // A frame is complete if:
-    // - For frames 1-9: if it's a strike, or if both rolls are present
-    // - For frame 10: if both rolls are present, or third roll if needed
-    if (idx < 9) {
-      let rollIdx = rolls.slice(0, idx * 2 + 2).length - 2;
-      if (rolls[rollIdx] === 10) return true; // strike
-      return rolls[rollIdx] !== undefined && rolls[rollIdx + 1] !== undefined;
-    } else {
-      // 10th frame: if at least two rolls are present
-      return rolls.length >= 18 && rolls[18] !== undefined && rolls[19] !== undefined;
-    }
-  });
+  const completedFrames = frameScores.filter((s) => s !== undefined);
   const runningTotal = completedFrames.length > 0 ? completedFrames[completedFrames.length - 1] : 0;
 
   return (
