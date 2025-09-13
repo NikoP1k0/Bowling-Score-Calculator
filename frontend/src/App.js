@@ -19,6 +19,7 @@ function App() {
     const data = await res.json();
     setScore(data.score);
     setFrameScores(data.frameScores || []);
+    console.log("frameScores from backend:", data.frameScores); 
   };
 
   // Prepare frame data for display
@@ -108,7 +109,16 @@ function App() {
 
   // Only include frames that are actually complete (score is not undefined)
   const completedFrames = frameScores.filter((s) => s !== undefined);
-  const runningTotal = completedFrames.length > 0 ? completedFrames[completedFrames.length - 1] : 0;
+  // Find the last defined frame score (the running total up to the current frame)
+  const runningTotal = (() => {
+    for (let i = frameScores.length - 1; i >= 0; i--) {
+      if (typeof frameScores[i] === "number") return frameScores[i];
+    }
+    return 0;
+  })();
+
+  // Ensure frameScores is always length 10, filling with undefined if needed
+  const paddedFrameScores = Array.from({ length: 10 }, (_, i) => frameScores[i]);
 
   return (
     <div style={{ padding: "2rem", fontFamily: "monospace" }}>
@@ -130,15 +140,7 @@ function App() {
             textAlign: "center"
           }}>
             <div style={{ display: "flex", justifyContent: "center", gap: 2 }}>
-              <div style={{
-                border: "1px solid #aaa",
-                width: 24,
-                height: 24,
-                margin: 2,
-                display: "inline-block",
-                lineHeight: "24px",
-                background: "#fff"
-              }}>{f.first === 10 && idx < 9 ? "X" : f.first}</div>
+              {/* First box: blank if strike, otherwise show first roll */}
               <div style={{
                 border: "1px solid #aaa",
                 width: 24,
@@ -148,9 +150,29 @@ function App() {
                 lineHeight: "24px",
                 background: "#fff"
               }}>
-                {f.first !== "" && f.second !== "" && f.first !== 10 && (parseInt(f.first) + parseInt(f.second) === 10)
-                  ? "/"
-                  : (f.second === 10 ? "X" : f.second)}
+                {f.first === 10 && idx < 9 ? "" : f.first}
+              </div>
+              {/* Second box: "X" if strike, "/" if spare, otherwise show second roll */}
+              <div style={{
+                border: "1px solid #aaa",
+                width: 24,
+                height: 24,
+                margin: 2,
+                display: "inline-block",
+                lineHeight: "24px",
+                background: "#fff"
+              }}>
+                {f.first === 10 && idx < 9
+                  ? "X"
+                  : (
+                    f.first !== "" &&
+                    f.second !== "" &&
+                    f.first !== 10 &&
+                    (parseInt(f.first) + parseInt(f.second) === 10)
+                      ? "/"
+                      : (f.second === 10 ? "X" : f.second)
+                  )
+                }
               </div>
               {idx === 9 && (
                 <div style={{
@@ -165,6 +187,16 @@ function App() {
                   {f.third === 10 ? "X" : (f.second !== "" && f.third !== "" && parseInt(f.second) + parseInt(f.third) === 10 ? "/" : f.third)}
                 </div>
               )}
+            </div>
+            {/* Frame score display */}
+            <div style={{
+              borderTop: "1px solid #aaa",
+              marginTop: 4,
+              fontSize: 16,
+              color: "#333",
+              minHeight: 22
+            }}>
+              {paddedFrameScores[idx] !== undefined ? paddedFrameScores[idx] : ""}
             </div>
             <div style={{ fontSize: 12, color: "#888" }}>Frame {idx + 1}</div>
           </div>

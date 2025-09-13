@@ -5,20 +5,47 @@ const { simulateGame, calculateScore } = require("./bowling");
 function getFrameScores(rolls) {
   let scores = [];
   let rollIndex = 0;
-  let total = 0;
+  let prevTotal = 0;
   for (let frame = 0; frame < 10; frame++) {
+    if (rolls[rollIndex] === undefined) {
+      scores.push(undefined);
+      continue;
+    }
     if (rolls[rollIndex] === 10) {
-      total += 10 + (rolls[rollIndex + 1] || 0) + (rolls[rollIndex + 2] || 0);
-      scores.push(total);
+      // Strike
+      if (
+        rolls[rollIndex + 1] === undefined ||
+        rolls[rollIndex + 2] === undefined
+      ) {
+        scores.push(undefined);
+      } else {
+        const frameScore = 10 + rolls[rollIndex + 1] + rolls[rollIndex + 2];
+        prevTotal += frameScore;
+        scores.push(prevTotal);
+      }
       rollIndex += 1;
-    } else if ((rolls[rollIndex] || 0) + (rolls[rollIndex + 1] || 0) === 10) {
-      total += 10 + (rolls[rollIndex + 2] || 0);
-      scores.push(total);
+    } else if (
+      rolls[rollIndex + 1] !== undefined &&
+      rolls[rollIndex] + rolls[rollIndex + 1] === 10
+    ) {
+      // Spare
+      if (rolls[rollIndex + 2] === undefined) {
+        scores.push(undefined);
+      } else {
+        const frameScore = 10 + rolls[rollIndex + 2];
+        prevTotal += frameScore;
+        scores.push(prevTotal);
+      }
+      rollIndex += 2;
+    } else if (rolls[rollIndex + 1] !== undefined) {
+      // Open frame
+      const frameScore = rolls[rollIndex] + rolls[rollIndex + 1];
+      prevTotal += frameScore;
+      scores.push(prevTotal);
       rollIndex += 2;
     } else {
-      total += (rolls[rollIndex] || 0) + (rolls[rollIndex + 1] || 0);
-      scores.push(total);
-      rollIndex += 2;
+      // Incomplete frame
+      scores.push(undefined);
     }
   }
   return scores;
