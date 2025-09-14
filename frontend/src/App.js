@@ -8,6 +8,7 @@ function App() {
   const [score, setScore] = useState(null);
   const [frameScores, setFrameScores] = useState([]);
   const [message, setMessage] = useState("");
+  const [maxPossible, setMaxPossible] = useState(300);
 
   // Call backend to calculate score and frame scores
   const calculateScore = async (rollsArr) => {
@@ -96,6 +97,7 @@ function App() {
       setRollInFrame(1);
       setFirstRollPins(null);
     }
+    getMaxPossibleScore(newRolls).then(setMaxPossible);
   };
 
   // Determine available options for current roll
@@ -140,51 +142,35 @@ function App() {
             textAlign: "center"
           }}>
             <div style={{ display: "flex", justifyContent: "center", gap: 2 }}>
-              {/* First box: blank if strike, otherwise show first roll */}
-              <div style={{
-                border: "1px solid #aaa",
-                width: 24,
-                height: 24,
-                margin: 2,
-                display: "inline-block",
-                lineHeight: "24px",
-                background: "#fff"
-              }}>
-                {f.first === 10 && idx < 9 ? "" : f.first}
+              {/* First box */}
+              <div style={boxStyle}>
+                {idx === 9
+                  ? (f.first === 10 ? "X" : f.first)
+                  : (f.first === 10 ? "" : f.first)}
               </div>
-              {/* Second box: "X" if strike, "/" if spare, otherwise show second roll */}
-              <div style={{
-                border: "1px solid #aaa",
-                width: 24,
-                height: 24,
-                margin: 2,
-                display: "inline-block",
-                lineHeight: "24px",
-                background: "#fff"
-              }}>
-                {f.first === 10 && idx < 9
-                  ? "X"
-                  : (
-                    f.first !== "" &&
-                    f.second !== "" &&
-                    f.first !== 10 &&
-                    (parseInt(f.first) + parseInt(f.second) === 10)
-                      ? "/"
-                      : (f.second === 10 ? "X" : f.second)
-                  )
+              {/* Second box */}
+              <div style={boxStyle}>
+                {idx === 9
+                  ? (f.second === 10
+                      ? "X"
+                      : (f.first !== "" && f.second !== "" && f.first !== 10 && (parseInt(f.first) + parseInt(f.second) === 10)
+                        ? "/"
+                        : f.second))
+                  : (f.first === 10
+                      ? "X"
+                      : (f.first !== "" && f.second !== "" && f.first !== 10 && (parseInt(f.first) + parseInt(f.second) === 10)
+                        ? "/"
+                        : (f.second === 10 ? "X" : f.second)))
                 }
               </div>
+              {/* Third box (only for 10th frame) */}
               {idx === 9 && (
-                <div style={{
-                  border: "1px solid #aaa",
-                  width: 24,
-                  height: 24,
-                  margin: 2,
-                  display: "inline-block",
-                  lineHeight: "24px",
-                  background: "#fff"
-                }}>
-                  {f.third === 10 ? "X" : (f.second !== "" && f.third !== "" && parseInt(f.second) + parseInt(f.third) === 10 ? "/" : f.third)}
+                <div style={boxStyle}>
+                  {f.third === 10
+                    ? "X"
+                    : (f.second !== "" && f.third !== "" && f.second !== 10 && (parseInt(f.second) + parseInt(f.third) === 10)
+                      ? "/"
+                      : f.third)}
                 </div>
               )}
             </div>
@@ -213,6 +199,20 @@ function App() {
           <div style={{ fontWeight: "bold", fontSize: 18 }}>Total</div>
           <div style={{ fontSize: 24, marginTop: 8 }}>
             {runningTotal}
+          </div>
+        </div>
+        {/* Max Possible Score Box */}
+        <div style={{
+          flex: "1",
+          background: "#ffe6b3",
+          padding: "0.5rem",
+          minWidth: 120,
+          textAlign: "center",
+          borderLeft: "2px solid #333"
+        }}>
+          <div style={{ fontWeight: "bold", fontSize: 18 }}>Max Possible</div>
+          <div style={{ fontSize: 24, marginTop: 8 }}>
+            {maxPossible}
           </div>
         </div>
       </div>
@@ -249,5 +249,32 @@ function App() {
   );
 }
 
+function getMaxPossibleScore(rolls) {
+  // Copy current rolls
+  const simulatedRolls = [...rolls];
+  // Fill the rest with strikes (10s) until we have enough for 10 frames
+  while (simulatedRolls.length < 21) {
+    simulatedRolls.push(10);
+  }
+  return fetch("http://localhost:3001/score", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rolls: simulatedRolls }),
+  })
+    .then(res => res.json())
+    .then(data => data.score || 0);
+}
+
 export default App;
+
+// Constant style object so there is no need for repetition
+const boxStyle = {
+  border: "1px solid #aaa",
+  width: 24,
+  height: 24,
+  margin: 2,
+  display: "inline-block",
+  lineHeight: "24px",
+  background: "#fff"
+};
 
