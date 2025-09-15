@@ -57,5 +57,5 @@ The frontend will run on [http://localhost:3000](http://localhost:3000).
 **Note:** The frontend expects the backend to be running on port 3001.
 
 #### Technologies Used
-* Frontend: React, JavaScript, CSS
-* Backend: Node.js, Express
+* **Frontend:** React, JavaScript, CSS
+* **Backend:** Node.js, Express
