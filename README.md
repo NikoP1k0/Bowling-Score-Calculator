@@ -24,8 +24,8 @@ Prerequisites
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/bowling-score-calculator.git
-   cd bowling-score-calculator
+   git clone https://github.com/NikoP1k0/Bowling-Score-Calculator.git
+   cd Bowling-Score-Calculator
    ```
 
 3. Install backend dependencies:
