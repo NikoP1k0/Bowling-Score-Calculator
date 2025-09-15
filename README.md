@@ -96,7 +96,7 @@ Now that you have properly set up your frontend and backend, the next step is to
    Your frontend should be running now and the application will open automatically in your browser.
    The frontend will run on [http://localhost:3000](http://localhost:3000).
 
-   **Note 1:** The frontend expects the backend to be running on port 3001.
+   **Note 1:** The frontend expects the backend to be running on port 3001.  
    **Note 2:** If you want to stop running the application, just close down the command prompts.
    
 
