@@ -25,7 +25,7 @@ Open two of these command prompts, where one of them will be utilized for the ba
 
 ### Installation
 
-1. Clone the repository:
+1. Clone the repository:  
    Before cloning the repository, make sure you navigate to a directory you want to clone the repo to using the `cd` command.
    Once you have decided upon a directory, clone this repo using the command below.
    ```
@@ -37,7 +37,7 @@ Open two of these command prompts, where one of them will be utilized for the ba
    cd Bowling-Score-Calculator
    ```
 
-3. Install backend dependencies:
+3. Install backend dependencies:  
    Now that you are inside the project files, navigate to the backend by running the commands below.
    ```
    cd backend
@@ -48,7 +48,7 @@ Open two of these command prompts, where one of them will be utilized for the ba
    npm install
    ```
    
-5. Install frontend dependencies:
+5. Install frontend dependencies:  
    Now that you have installed the dependencies for the backend you can leave the backend command prompt for now and move to your second one.
    Navigate to the ``Bowling-Score-Calculator`` in the same way you have done when setting up the backend.
 
@@ -65,7 +65,7 @@ Open two of these command prompts, where one of them will be utilized for the ba
 ### Running the App
 Now that you have properly set up your frontend and backend, the next step is to run the app.
 
-1. Start the backend:
+1. Start the backend:  
    Go back to your command prompt handling your backend and if you're not in the ``backend`` directory, navigate to it using ``cd`` and run the following command.
    ```
    npm start
@@ -81,7 +81,7 @@ Now that you have properly set up your frontend and backend, the next step is to
    This means that your backend is running properly and you can leave this command prompt alone. 
    The backend will run on [http://localhost:3001](http://localhost:3001).
 
-3. Start the frontend:
+3. Start the frontend:  
    Go back to your command prompt handling your frontend and if you're not in the ``frontend`` directory, navigate to it using ``cd`` and run the same command you used for the backend.
    ```
    npm start
