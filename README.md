@@ -13,7 +13,7 @@ An interactive web app for keeping track of bowling scores for up to 6 players. 
 
 ## Preview
 
-![Bowling Score Calculator Screenshot](./screenshotApp.PNG)
+![Bowling Score Calculator Screenshot](./scorecardApp.PNG)
 
 ## Getting Started
 Prerequisites
