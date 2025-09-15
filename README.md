@@ -38,7 +38,7 @@ Prerequisites
    
 ### Running the App
 
-**Start the backend:**
+1. Start the backend:
    ```
    cd backend
    npm start
@@ -46,7 +46,7 @@ Prerequisites
 
 The backend will run on [http://localhost:3001](http://localhost:3001).
 
-**Start the frontend:**
+2. Start the frontend:
    ```
    cd ../frontend
    npm start
