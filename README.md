@@ -21,10 +21,9 @@ Prerequisites
 * [Node.js](https://nodejs.org/en) (v16 or newer recommended)
 * [npm](https://www.npmjs.com/) (comes with Node.js)
 
+### Installation
 Once you have finished downloading Node.js and if you have a computer running on Windows, search for the **Node.js command prompt** throught the Windows menu.
 Open two of these command prompts, where one of them will be utilized for the backend and the other for the frontend.
-
-### Installation
 
 1. Clone the repository:  
    Before cloning the repository, make sure you navigate to a directory you want to clone the repo to using the `cd` command.
