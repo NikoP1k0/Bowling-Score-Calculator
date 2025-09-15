@@ -49,7 +49,7 @@ Open two of these command prompts, where one of them will be utilized for the ba
    ```
    
 5. Install frontend dependencies:  
-   Now that you have installed the dependencies for the backend you can leave the backend command prompt for now and move to your second one.
+   Now that you have installed the dependencies for the backend you can leave the backend command prompt alone for now and move to your second one.
    Navigate to the ``Bowling-Score-Calculator`` in the same way you have done when setting up the backend.
 
    Once you have found the project files, navigate into the frontend files using the command below.
