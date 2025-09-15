@@ -17,6 +17,7 @@ An interactive web app for keeping track of bowling scores for up to 6 players. 
 
 ## Getting Started
 Prerequisites
+* [Git](https://git-scm.com/downloads) (needed to clone the repo)
 * [Node.js](https://nodejs.org/en) (v16 or newer recommended)
 * [npm](https://www.npmjs.com/) (comes with Node.js)
 
