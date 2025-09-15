@@ -11,6 +11,10 @@ An interactive web app for keeping track of bowling scores for up to 6 players. 
 * Rename & delete: Rename scorecards or remove them at any time.
 * Dynamic: Players can fill out their scorecards in any order.
 
+## Preview
+
+![Bowling Score Calculator Screenshot](./screenshotApp.PNG)
+
 ## Getting Started
 Prerequisites
 * [Node.js](https://nodejs.org/en) (v16 or newer recomended)
