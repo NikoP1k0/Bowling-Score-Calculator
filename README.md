@@ -19,28 +19,28 @@ Prerequisites
 ### Installation
 
 1. Clone the repository:
-   `git clone https://github.com/yourusername/bowling-score-calculator.git
-    cd bowling-score-calculator`
+   `git clone https://github.com/yourusername/bowling-score-calculator.git`
+   `cd bowling-score-calculator`
 
 2. Install backend dependencies:
-   `cd backend
-    npm install`
+   `cd backend`
+   `npm install`
 
 3. Install frontend dependencies:
-   `cd ../frontend
-    npm install`
+   `cd ../frontend`
+   `npm install`
 
 ### Running the App
 
 **Start the backend:**
-    `cd backend
-    npm start`
+   `cd backend`
+   `npm start`
 
 The backend will run on [http://localhost:3001](http://localhost:3001).
 
 **Start the frontend:**
-    `cd ../frontend
-    npm start`
+   `cd ../frontend`
+   `npm start`
 
 The frontend will run on [http://localhost:3000](http://localhost:3000).
 
