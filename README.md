@@ -48,7 +48,7 @@ Prerequisites
    npm start
    ```
 
-The backend will run on [http://localhost:3001](http://localhost:3001).
+   The backend will run on [http://localhost:3001](http://localhost:3001).
 
 2. Start the frontend:
    ```
@@ -56,7 +56,7 @@ The backend will run on [http://localhost:3001](http://localhost:3001).
    npm start
    ```
 
-The frontend will run on [http://localhost:3000](http://localhost:3000).
+   The frontend will run on [http://localhost:3000](http://localhost:3000).
 
 **Note:** The frontend expects the backend to be running on port 3001.
 
