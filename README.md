@@ -103,3 +103,5 @@ Now that you have properly set up your frontend and backend, the next step is to
 #### Technologies Used
 * **Frontend:** React, JavaScript, CSS
 * **Backend:** Node.js, Express
+
+*Feel free to reach out if you have any questions or want to discuss the code!*
